@@ -1,109 +1,81 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>chat</title>
-  </head>
-  <body>
-    <div>
-      <ul></ul>
-      <form action="post">
-        <input type="text" autofocus />
-        <button type="submit">전송</button>
-      </form>
-    </div>
-    <script>
-        const $form = document.querySelector("form");
-        const $input = document.querySelector("input");
-        const $chatList = document.querySelector("ul");
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title></title>
+    </head>
+    <body>
+        <div>
+            <form>
+                <label for="grade">학년을 입력해주세요 (ex. 고등학교 3학년)</label><br>
+                <input type="text" id="grade" autofocus/><br>
+                <label for="semester">학기를 입력해주세요 (ex. 1학기)</label><br>
+                <input type="text" id="semester"/><br>
+                <label for="subject">과목을 입력해주세요 (ex. 물리)</label><br>
+                <input type="text" id="subject"/><br>
+                <label for="range">출제범위를 입력해주세요 (ex. 파동, 전자기장)</label><br>
+                <input type="text" id="range"/><br>
+                <label for="count">풀고 싶은 문제 개수를 적어주세요</label><br>
+                <input type="text" id="count"/><br>
+                <button type="submit">전송</button>
+            </form>
+        </div>
+        <script>
+            let $button = document.querySelector('button')
+            let $input = document.querySelectorAll('input')
+            
+            let url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/`
 
-        // openAI API
-        let url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/`;
+            let inputData = []
+            let sendData = []            
+            let aiData = []
 
-        // 사용자의 질문
-        let question;
+            $button.addEventListener("click", e => {
+                e.preventDefault()
+                for (i = 0; i < $input.length; i++) {
+                    inputData[i] = $input[i].value
+                }
+                
+                $input[2].value = ''
+                $input[3].value = ''
 
-        // 질문과 답변 저장
-        let data = [
-        {
-            role: "system",
-            content: "assistant는 친절한 답변가이다.",
-        },
-        ];
-
-        // 화면에 뿌려줄 데이터, 질문들
-        let questionData = [];
-
-        // input에 입력된 질문 받아오는 함수
-        $input.addEventListener("input", (e) => {
-        question = e.target.value;
-        });
-
-        // 사용자의 질문을 객체를 만들어서 push
-        const sendQuestion = (question) => {
-        if (question) {
-            data.push({
-            role: "user",
-            content: question,
-            });
-            questionData.push({
-            role: "user",
-            content: question,
-            });
-        }
-        };
-
-        // 화면에 질문 그려주는 함수
-        const printQuestion = async () => {
-        if (question) {
-            let li = document.createElement("li");
-            li.classList.add("question");
-            questionData.map((el) => {
-            li.innerText = el.content;
-            });
-            $chatList.appendChild(li);
-            questionData = [];
-            question = false;
-        }
-        };
-
-        // 화면에 답변 그려주는 함수
-        const printAnswer = (answer) => {
-        let li = document.createElement("li");
-        li.classList.add("answer");
-        li.innerText = answer;
-        $chatList.appendChild(li);
-        };
-
-        // api 요청보내는 함수
-        const apiPost = async () => {
-        const result = await fetch(url, {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-            redirect: "follow",
-        })
-            .then((res) => res.json())
-            .then((res) => {
-            printAnswer(res.choices[0].message.content);
+                sendData.push({
+                    "role": "user",
+                    content: `${inputData[0]} ${inputData[1]} ${inputData[2]} ${inputData[3]} 문제 예시 각 ${inputData[4]}개 만들어줘. 결과는 "문제", "정답", "해설" 순이고, json으로만 해줘.`
+                })
+                aiAPI()
+                sendData.pop()
             })
-            .catch((err) => {
-            console.log(err);
-            });
-        };
 
-        // submit
-        $form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        $input.value = null;
-        sendQuestion(question);
-        apiPost();
-        printQuestion();
-        });
-    </script>
-  </body>
+            function aiAPI() {
+                fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(sendData),
+                redirect: "follow",
+                })
+                .then(res => res.json())
+                .then(res => {
+                    aiData = JSON.parse(res.choices[0].message.content)
+                    console.log(aiData)
+                    console.log(aiData[0])
+                    // manageData(aiData)
+                })
+            }
+
+            // function manageData(aiData) {
+            //     for (const i of aiData) {
+            //         const problem = document.createElement("h2");
+            //         const solution = document.createElement("p");
+                    
+            //         problem.textContent = i.문제;
+            //         solution.textContent = i.정답;
+            //     }
+            // }
+        </script>
+    </body>
 </html>
