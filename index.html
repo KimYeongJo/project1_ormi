@@ -22,15 +22,20 @@
                 <button type="submit">전송</button>
             </form>
         </div>
+        <div id="display"></div>
         <script>
             let $button = document.querySelector('button')
             let $input = document.querySelectorAll('input')
+            let $display = document.getElementById('display')
             
             let url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/`
 
             let inputData = []
-            let sendData = []            
             let aiData = []
+            let sendData = [{
+                "role": "system",
+                "content": "assistant는 천재 문제 제작자다."
+            }]            
 
             $button.addEventListener("click", e => {
                 e.preventDefault()
@@ -43,7 +48,7 @@
 
                 sendData.push({
                     "role": "user",
-                    content: `${inputData[0]} ${inputData[1]} ${inputData[2]} ${inputData[3]} 문제 예시 각 ${inputData[4]}개 만들어줘. 결과는 "문제", "정답", "해설" 순이고, json으로만 해줘.`
+                    content: `${inputData[0]} ${inputData[1]} ${inputData[2]} ${inputData[3]} 문제를 각 ${inputData[4]}개 만들어줘. 결과는 반드시 "문제1":{"문제", "정답", "해설"} 순이고, json 으로만 해줘.`
                 })
                 aiAPI()
                 sendData.pop()
@@ -60,22 +65,32 @@
                 })
                 .then(res => res.json())
                 .then(res => {
+                    console.log(res.choices[0].message.content)
                     aiData = JSON.parse(res.choices[0].message.content)
                     console.log(aiData)
-                    console.log(aiData[0])
-                    // manageData(aiData)
+                    manageData(aiData)
                 })
             }
 
-            // function manageData(aiData) {
-            //     for (const i of aiData) {
-            //         const problem = document.createElement("h2");
-            //         const solution = document.createElement("p");
+            function manageData(aiData) {
+                for (i in aiData) {
+                    let problem = document.createElement("h2");
+                    let solve = document.createElement("textarea")
+                    let answer = document.createElement("p");
+                    let solution = document.createElement("p");
+                    let id = aiData[i]
                     
-            //         problem.textContent = i.문제;
-            //         solution.textContent = i.정답;
-            //     }
-            // }
+                    problem.textContent = id["문제"];
+                    solve.innerText = ''
+                    answer.textContent = `정답: ${id["정답"]}`
+                    solution.textContent = `해설: ${id["해설"]}`
+
+                    display.appendChild(problem);
+                    display.appendChild(solve);
+                    display.appendChild(answer);
+                    display.appendChild(solution);
+                }
+            }
         </script>
     </body>
 </html>
