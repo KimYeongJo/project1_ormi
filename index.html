@@ -17,41 +17,41 @@
                 <input type="text" id="subject"/><br>
                 <label for="range">출제범위를 입력해주세요 (ex. 파동, 전자기장)</label><br>
                 <input type="text" id="range"/><br>
-                <label for="count">풀고 싶은 문제 개수를 적어주세요</label><br>
+                <label for="count">풀고 싶은 문제 개수를 적어주세요 (ex. 1, 2, 3 ...)</label><br>
                 <input type="text" id="count"/><br>
                 <button type="submit">전송</button>
             </form>
         </div>
         <div id="display"></div>
         <script>
-            let $button = document.querySelector('button')
-            let $input = document.querySelectorAll('input')
-            let $display = document.getElementById('display')
+            const $button = document.querySelector('button')
+            const $input = document.querySelectorAll('input')
+            const $display = document.getElementById('display')
             
-            let url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/`
+            const url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/`
 
-            let inputData = []
-            let aiData = []
-            let sendData = [{
+            let inputData = [] // input data
+            let aiData = [] // API로 전달 받은 data
+            let sendData = [{ // API로 전달 data
                 "role": "system",
                 "content": "assistant는 천재 문제 제작자다."
             }]            
 
             $button.addEventListener("click", e => {
-                e.preventDefault()
-                for (i = 0; i < $input.length; i++) {
+                e.preventDefault() // 추후 로딩으로 바꿀예정
+                for (i = 0; i < $input.length; i++) { // input data 할당
                     inputData[i] = $input[i].value
                 }
                 
-                $input[2].value = ''
-                $input[3].value = ''
+                $input[2].value = '' // 과목 초기화
+                $input[3].value = '' // 범위 초기화
 
                 sendData.push({
                     "role": "user",
                     content: `${inputData[0]} ${inputData[1]} ${inputData[2]} ${inputData[3]} 문제를 각 ${inputData[4]}개 만들어줘. 결과는 반드시 "문제1":{"문제", "정답", "해설"} 순이고, json 으로만 해줘.`
                 })
                 aiAPI()
-                sendData.pop()
+                sendData.pop() // 재전송을 위한 기존 data 제거
             })
 
             function aiAPI() {
@@ -65,25 +65,25 @@
                 })
                 .then(res => res.json())
                 .then(res => {
-                    console.log(res.choices[0].message.content)
-                    aiData = JSON.parse(res.choices[0].message.content)
-                    console.log(aiData)
-                    manageData(aiData)
+                    // console.log(res.choices[0].message.content)
+                    aiData = JSON.parse(res.choices[0].message.content) // 전달 받은 data 파싱
+                    // console.log(aiData)
+                    spreadData(aiData)
                 })
             }
 
-            function manageData(aiData) {
+            function spreadData(aiData) {
                 for (i in aiData) {
-                    let problem = document.createElement("h2");
-                    let solve = document.createElement("textarea")
-                    let answer = document.createElement("p");
-                    let solution = document.createElement("p");
-                    let id = aiData[i]
+                    const problem = document.createElement("h2");
+                    const solve = document.createElement("textarea")
+                    const answer = document.createElement("p"); // p는 스포일러 처리 예정
+                    const solution = document.createElement("p");
+                    const id = aiData[i]
                     
-                    problem.textContent = id["문제"];
+                    problem.textContent = `문제 : ${id["문제"]}`
                     solve.innerText = ''
-                    answer.textContent = `정답: ${id["정답"]}`
-                    solution.textContent = `해설: ${id["해설"]}`
+                    answer.textContent = `정답 : ${id["정답"]}`
+                    solution.textContent = `해설 : ${id["해설"]}`
 
                     display.appendChild(problem);
                     display.appendChild(solve);
