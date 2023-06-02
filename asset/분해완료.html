@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.tailwindcss.com"></script>
+    <title></title>
+    </head>
+    <body>
+        <div>
+            <form class="flex flex-col m-1">
+                <label for="grade">학년을 입력해주세요 (ex. 고등학교 3학년)</label>
+                <input type="text" id="grade" class="border-black border-solid border-2 w-1/2" autofocus/>
+                <label for="semester">학기를 입력해주세요 (ex. 1학기)</label>
+                <input type="text" id="semester" class="border-black border-solid border-2 w-1/2"/>
+                <label for="subject">과목을 입력해주세요 (ex. 물리)</label>
+                <input type="text" id="subject" class="border-black border-solid border-2 w-1/2"/>
+                <label for="range">출제범위를 입력해주세요 (ex. 파동, 전자기장)</label>
+                <input type="text" id="range" class="border-black border-solid border-2 w-1/2"/>
+                <label for="count">풀고 싶은 문제 개수를 적어주세요 (ex. 1, 2, 3 ...)</label>
+                <input type="text" id="count" class="border-black border-solid border-2 w-1/2"/>
+                <button type="submit">전송</button>
+            </form>
+        </div>
+        <div id="display"></div>
+        <script>
+            const $button = document.querySelector('button')
+            const $input = document.querySelectorAll('input')
+            const $display = document.getElementById('display')
+            
+            const url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/`
+
+            let inputData = [] // input data
+            let aiData = [] // API로 전달 받은 data
+            let sendData = [{ // API로 전달 data
+                "role": "system",
+                "content": "assistant는 천재 문제 제작자다."
+            }]            
+
+            $button.addEventListener("click", e => {
+                e.preventDefault() // 추후 로딩으로 바꿀예정
+                for (i = 0; i < $input.length; i++) { // input data 할당
+                    inputData[i] = $input[i].value
+                }
+                
+                $input[2].value = '' // 과목 초기화
+                $input[3].value = '' // 범위 초기화
+
+                sendData.push({
+                    "role": "user",
+                    content: `${inputData[0]} ${inputData[1]} ${inputData[2]} ${inputData[3]} 문제를 각 ${inputData[4]}개 만들어줘. 결과는 반드시 "문제1":{"문제", "정답", "해설"} 순이고, json 으로만 해줘.`
+                })
+                aiAPI()
+                sendData.pop() // 재전송을 위한 기존 data 제거
+            })
+
+            function aiAPI() {
+                fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(sendData),
+                redirect: "follow",
+                })
+                .then(res => res.json())
+                .then(res => {
+                    // console.log(res.choices[0].message.content)
+                    aiData = JSON.parse(res.choices[0].message.content) // 전달 받은 data 파싱
+                    // console.log(aiData)
+                    spreadData(aiData)
+                })
+            }
+
+            function spreadData(aiData) {
+                for (i in aiData) {
+                    const problem = document.createElement("h2");
+                    const solve = document.createElement("textarea")
+                    const answer = document.createElement("p"); // p는 스포일러 처리 예정
+                    const solution = document.createElement("p");
+                    const id = aiData[i]
+                    
+                    problem.textContent = `문제 : ${id["문제"]}`
+                    solve.innerText = ''
+                    answer.textContent = `정답 : ${id["정답"]}`
+                    solution.textContent = `해설 : ${id["해설"]}`
+
+                    display.appendChild(problem);
+                    display.appendChild(solve);
+                    display.appendChild(answer);
+                    display.appendChild(solution);
+                }
+            }
+        </script>
+    </body>
+</html>
