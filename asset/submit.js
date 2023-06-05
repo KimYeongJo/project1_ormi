@@ -20,5 +20,8 @@ $form.addEventListener("submit", e => {
             closeLoadingWithMask()
             spreadData(aiData)
         })
+        .catch(() => {
+            alert("AI 동작 실패! 새로고침 해주세요")
+        })
     LoadingWithMask()
 })

@@ -1,8 +1,8 @@
 const $button = document.querySelector('button')
 const $input = document.querySelectorAll('input')
 
-let inputData = []
-let sendData = [{
+const inputData = []
+const sendData = [{
     "role": "system",
     "content": "assistant는 천재 문제 제작자다."
 }]
