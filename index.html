@@ -9,26 +9,39 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <title></title>
     </head>
-    <body>
+    <body class="m-20 border-2 bg-cover bg-center bg-contain text-slate-300" style="background-image: url('./Img/BodyImg.jpg')">
+        <header class="flex flex-row mb-20 border-2 justify-between h-20">
+            <div>
+                <img src="./Img/LogoImg.gif" class="h-full" alt="">
+            </div>
+            <h1 class="text-5xl align-middle mt-3">문제 생성기</h1>
+            <div>
+                <a href="https://github.com/KimYeongJo/project_ormi_1" alt="">
+                    <img src="./Img/GitImg.png" class="h-full" alt="">
+                </a>
+            </div>
+        </header>
         <div>
-            <form class="flex flex-col m-1">
-                <label for="grade">학년을 입력해주세요</label>
-                <input type="text" id="grade" class="border-black border-solid border-2 w-1/2" placeholder="고등학교 2학년" autofocus/>
-                <label for="semester">학기를 입력해주세요.</label>
-                <input type="text" id="semester" class="border-black border-solid border-2 w-1/2" placeholder="1학기, 2학기"/>
-                <label for="subject">과목을 입력해주세요.</label>
-                <input type="text" id="subject" class="border-black border-solid border-2 w-1/2" placeholder="물리학, 지구과학, 미적분"/>
-                <label for="range">출제범위를 입력해주세요.</label>
-                <input type="text" id="range" class="border-black border-solid border-2 w-1/2" placeholder="파동, 로그함수, 수열"/>
-                <label for="count">풀고 싶은 문제 개수를 적어주세요.</label>
-                <input type="text" id="count" class="border-black border-solid border-2 w-1/2" placeholder="1, 2, 3..."/>
-                <button type="submit" class="mt-5 border-black border-solid border-2 w-1/2">문제 생성</button>
+            <form class="flex flex-col border-2">
+                <label for="grade" class="m-2">학년을 입력해주세요</label>
+                <input type="text" id="grade" class="border-black border-solid border-2 m-2" placeholder="고등학교 2학년" autofocus/>
+                <label for="semester" class="m-2">학기를 입력해주세요.</label>
+                <input type="text" id="semester" class="border-black border-solid border-2 m-2" placeholder="1학기, 2학기"/>
+                <label for="subject" class="m-2">과목을 입력해주세요.</label>
+                <input type="text" id="subject" class="border-black border-solid border-2 m-2" placeholder="물리학, 지구과학, 미적분"/>
+                <label for="range" class="m-2">출제범위를 입력해주세요.</label>
+                <input type="text" id="range" class="border-black border-solid border-2 m-2" placeholder="파동, 로그함수, 수열"/>
+                <label for="count" class="m-2">풀고 싶은 문제 개수를 적어주세요.</label>
+                <input type="text" id="count" class="border-black border-solid border-2 m-2" placeholder="1, 2, 3..."/>
+                <button type="submit" class="mt-5 border-black border-solid border-2 bg-green-300 text-gray-800">문제 생성</button>
             </form>
+        </div>
+        <div>
+            % Ai 
         </div>
         <script src="./asset/savedata.js"></script>
         <script src="./asset/submit.js"></script>
         <script src="./asset/loading.js"></script>
         <script src="./asset/spread.js"></script>
-        <script src="./asset/toggle.js"></script>
     </body>
 </html>
