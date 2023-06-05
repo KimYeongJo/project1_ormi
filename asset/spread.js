@@ -25,7 +25,7 @@ function spreadData(aiData) {
         show.setAttribute("id", "btn_toggle")
         show.setAttribute("onclick", `$('#${key}').toggle()`)
         show.textContent = '정답 보기'
-        solve.classList.add('border-black', 'border-solid', 'border-2')
+        show.classList.add('border-black', 'border-solid', 'border-2')
         
         const answer = document.createElement("p")
         answer.setAttribute("id", `${key}`)
