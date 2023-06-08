@@ -8,7 +8,7 @@ function LoadingWithMask() {
     let loadingImg = '';
       
     loadingImg += "<div id='loadingImg'>";
-    loadingImg += "<img src='./Img/LoadingImg.gif' style='position: absolute; z-index:2; top: 50%; left: 50%; transform: translate(-50%, -50%);'/>";
+    loadingImg += "<img src='./img/LoadingImg.gif' style='position: absolute; z-index:2; top: 50%; left: 50%; transform: translate(-50%, -50%);'/>";
     loadingImg += "</div>";
   
     //화면에 레이어 추가
