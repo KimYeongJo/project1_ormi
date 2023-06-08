@@ -15,9 +15,6 @@ $button.addEventListener("click", e => {
     for (i = 0; i < $input.length; i++) {
         inputData[i] = $input[i].value
     }
-    
-    $input[2].value = ''
-    $input[3].value = ''
 
     sendData.push({
         "role": "user",
