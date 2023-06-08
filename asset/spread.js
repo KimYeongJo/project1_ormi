@@ -1,5 +1,6 @@
 function spreadData(aiData) {
     
+    // API 답변 출력할 div 생성 
     const $body = document.querySelector("body")
     const div = document.createElement("div")
     div.setAttribute("id", "display")
@@ -7,8 +8,10 @@ function spreadData(aiData) {
     $body.append(div) 
     const $display = document.getElementById("display")
     
+    // aiData index 순회용
     let j = 0
     
+    // 화면에 API 답변 출력
     for (i in aiData) {
         const id = aiData[i]
         const key = Object.keys(aiData)[j]

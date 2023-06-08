@@ -1,8 +1,12 @@
 const $form = document.querySelector('form')
+
+// openAI API URL
 const url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/`
 
+// API 답변 Data
 let aiData = []
 
+// form 태그 sumbit 시 API 요청
 $form.addEventListener("submit", e => {
     e.preventDefault()
     fetch(url, {
