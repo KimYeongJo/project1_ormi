@@ -21,9 +21,13 @@ $form.addEventListener("submit", e => {
         .then(res => {
             aiData = JSON.parse(res.choices[0].message.content)
             console.log(aiData)
+            if (document.getElementById("display")) {
+                document.getElementById("display").remove()
+            }
             closeLoadingWithMask()
             spreadData(aiData)
             sendData.pop()
+
         })
         .catch(() => {
             alert("AI 동작 실패! 다시 생성 해주세요")

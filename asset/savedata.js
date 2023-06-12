@@ -1,5 +1,5 @@
-const $button = document.querySelector('button')
-const $input = document.querySelectorAll('input')
+const $button = document.querySelector("button")
+const $input = document.querySelectorAll("input")
 
 // user input Data
 const inputData = []
@@ -34,7 +34,7 @@ $button.addEventListener("click", e => {
     }
 
     sendData.push({
-        "role": "user",
+        role: "user",
         content: `${inputData[0]} ${inputData[1]} ${inputData[2]} ${inputData[3]} 문제를 각 ${inputData[4]}개 만들어줘. 결과는 반드시 "문제1":{"문제", "정답", "해설"} 순이고, json 으로만 해줘.`
     })
 })
