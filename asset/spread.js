@@ -12,6 +12,7 @@ function spreadData(aiData) {
     div.classList.add('flex', 'flex-col', 'px-20', 'mx-20', 'mt-20')
     $body.append(div)
     const $display = document.getElementById("display")
+    const $scroll = $display.getBoundingClientRect().top
     
     // 화면에 API 답변 출력
     for (let i = 0; i < Object.keys(aiData).length; i++) {
@@ -46,4 +47,6 @@ function spreadData(aiData) {
         problemBox.append(problem, solve, show, answer, solution)
         $display.append(problemBox)
     }
+
+    window.scrollTo(0, $scroll)
 }

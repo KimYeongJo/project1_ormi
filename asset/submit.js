@@ -25,7 +25,6 @@ $form.addEventListener("submit", e => {
             closeLoadingWithMask()
             spreadData(aiData)
             sendData.pop()
-
         })
         .catch(() => {
             alert("AI 동작 실패! 다시 생성 해주세요")
