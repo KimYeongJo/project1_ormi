@@ -17,14 +17,16 @@ function spreadData(aiData) {
     for (let i = 0; i < Object.keys(aiData).length; i++) {
         const id = Object.keys(aiData)[i]
         const problemBox = document.createElement("div")
-        problemBox.classList.add('flex', 'flex-col', 'mt-3', 'p-2', 'border-gray', 'border-solid', 'border-2', 'rounded-lg')
+        problemBox.classList.add('flex', 'flex-col', 'mt-3', 'p-2', 'border-gray', 
+                                 'border-solid', 'border-2', 'rounded-lg')
         
         const problem = document.createElement("h2")
         problem.textContent = `문제 : ${aiData[id]["문제"]}`
         
         const solve = document.createElement("textarea")
         solve.innerText = ''
-        solve.classList.add('mt-3', 'border-white', 'border-solid', 'border-2', 'rounded-lg', 'text-black')
+        solve.classList.add('mt-3', 'border-white', 'border-solid', 'border-2',
+                            'rounded-lg', 'text-black')
         
         const show = document.createElement("button")
         show.setAttribute("onclick", `answerToggle("${id}")`)

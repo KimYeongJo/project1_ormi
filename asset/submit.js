@@ -1,5 +1,3 @@
-const $form = document.querySelector('form')
-
 // openAI API URL
 const url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/`
 
