@@ -2,7 +2,7 @@
 const url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/`
 
 // API 답변 Data
-let aiData = []
+const aiData = []
 
 // form 태그 sumbit 시 API 요청
 $form.addEventListener("submit", e => {
