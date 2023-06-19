@@ -1,5 +1,10 @@
 function spreadData(aiData) {
     
+    // 문제 재생성 시 기존 문제 제거
+    if (document.getElementById("display")) {
+        document.getElementById("display").remove()
+    }
+    
     // API 답변 출력할 div 생성 
     const $body = document.querySelector("body")
     const div = document.createElement("div")

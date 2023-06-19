@@ -2,7 +2,7 @@
 const url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/`
 
 // API 답변 Data
-const aiData = []
+let aiData = []
 
 // form 태그 sumbit 시 API 요청
 $form.addEventListener("submit", e => {
@@ -14,24 +14,18 @@ $form.addEventListener("submit", e => {
         },
         body: JSON.stringify(sendData),
         redirect: "follow",
-        })
-        .then(res => res.json())
-        .then(res => {
-            aiData = JSON.parse(res.choices[0].message.content)
-            console.log(aiData)
-            
-            // 문제 재생성 시 기존 문제 제거
-            if (document.getElementById("display")) {
-                document.getElementById("display").remove()
-            }
-            closeLoadingWithMask()
-            spreadData(aiData)
-            sendData.pop()
-        })
-        .catch(() => {
-            alert("AI 동작 실패! 다시 생성 해주세요")
-            closeLoadingWithMask()
-            sendData.pop()
-        })
+    })
+    .then(res => res.json())
+    .then(res => {
+        aiData = JSON.parse(res.choices[0].message.content)
+        spreadData(aiData)
+        closeLoadingWithMask()
+        sendData.pop()
+    })
+    .catch(() => {
+        alert("AI 동작 실패! 다시 생성 해주세요")
+        closeLoadingWithMask()
+        sendData.pop()
+    })
     LoadingWithMask()
 })
