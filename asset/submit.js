@@ -19,6 +19,8 @@ $form.addEventListener("submit", e => {
         .then(res => {
             aiData = JSON.parse(res.choices[0].message.content)
             console.log(aiData)
+            
+            // 문제 재생성 시 기존 문제 제거
             if (document.getElementById("display")) {
                 document.getElementById("display").remove()
             }
