@@ -21,9 +21,9 @@ $form.addEventListener("submit", e => {
             console.log(aiData)
             
             // 문제 재생성 시 기존 문제 제거
-            // if (document.getElementById("display")) {
-            //     document.getElementById("display").remove()
-            // }
+            if (document.getElementById("display")) {
+                document.getElementById("display").remove()
+            }
             closeLoadingWithMask()
             spreadData(aiData)
             sendData.pop()
