@@ -15,7 +15,7 @@
 
 ### 3.1 프로젝트 구조
 ```
-OrmiProject
+project_ormi_1
 ├─index.html
 |
 ├─asset
